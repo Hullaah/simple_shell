@@ -14,7 +14,7 @@ int main(void)
 	char *lineptr = NULL;
 	size_t num = 0;
 	ssize_t read;
-	char **tab, **arr;
+	/*char **tab, **arr;*/
 	/*Test _getline implementatiion*/
 	write(STDOUT_FILENO, "$ ", 2);
 	read = _getline(&lineptr, &num, STDIN_FILENO);
@@ -23,7 +23,7 @@ int main(void)
 	write(STDOUT_FILENO, lineptr, read);
 	free(lineptr);
 	/*Test strtow implementation*/
-	tab = strtow("      ALX School         #cisfun      ");
+	/*tab = strtow("      ALX School         #cisfun      ");
 	if (tab == NULL)
 	{
         	printf("Failed\n");
@@ -37,6 +37,6 @@ int main(void)
     	{
         	free(*arr);
     	}
-	free(tab);
+	free(tab);*/
 	return (0);
 }

@@ -5,7 +5,7 @@
  * @str: string
  * Return: number of words in a string
 */
-int word_count(char *str)
+int word_count(char *str, char delim)
 {
 	int i = 1;
 	int words = 0;
@@ -14,7 +14,7 @@ int word_count(char *str)
 		words++;
 	for (; str[i] != '\0'; i++)
 	{
-		if (str[i] != ' ' && str[i - 1] == ' ')
+		if (str[i] != delim && str[i - 1] == delim)
 			words++;
 	}
 	return (words);
@@ -26,7 +26,7 @@ int word_count(char *str)
  * e.g: first word, second word, third word and so on
  * Return: length of word in a string
 */
-int word_length(char *str, int word)
+int word_length(char *str, int word, char delim)
 {
 	int i = 1, j = 0, words = 0;
 
@@ -35,19 +35,19 @@ int word_length(char *str, int word)
 		words++;
 		if (word == words)
 		{
-			while (str[j] != ' ' && str[j] != '\0')
+			while (str[j] != delim && str[j] != '\0')
 				j++;
 			return (j);
 		}
 	}
 	for (; str[i] != '\0'; i++)
 	{
-		if (str[i] != ' ' && str[i - 1] == ' ')
+		if (str[i] != delim && str[i - 1] == delim)
 		{
 			words++;
 			if (word == words)
 			{
-				while (str[i] != ' ' && str[i] != '\0')
+				while (str[i] != delim && str[i] != '\0')
 				{
 					i++;
 					j++;
@@ -66,12 +66,12 @@ int word_length(char *str, int word)
  * and so on is to be gotten
  * Return: gotten word
 */
-char *get_word(char *str, int word)
+char *get_word(char *str, int word, char delim)
 {
 	int i = 1;
 	int words = 0;
 
-	if (str[0] != ' ')
+	if (str[0] != delim)
 	{
 		words++;
 		if (word == words)
@@ -81,7 +81,7 @@ char *get_word(char *str, int word)
 	}
 	for (; str[i] != '\0'; i++)
 	{
-		if (str[i] != ' ' && str[i - 1] == ' ')
+		if (str[i] != delim && str[i - 1] == delim)
 		{
 			words++;
 			if (word == words)
@@ -97,9 +97,9 @@ char *get_word(char *str, int word)
  * @str: string
  * Return: array of words
 */
-char **strtow(char *str)
+char **strtow(char *str, char delim)
 {
-	int total_word = word_count(str);
+	int total_word = word_count(str, delim);
 	int i, j, k, string_length;
 	char **string_arr;
 	char *tmp;
@@ -113,7 +113,7 @@ char **strtow(char *str)
 		return (NULL);
 	for (i = 0; i < total_word; i++)
 	{
-		string_arr[i] = malloc(word_length(str, i + 1) + 1);
+		string_arr[i] = malloc(word_length(str, i + 1, delim) + 1);
 		if (string_arr[i] == NULL)
 		{
 			free(string_arr);
@@ -122,11 +122,11 @@ char **strtow(char *str)
 	}
 	for (k = 0; k < total_word; k++)
 	{
-		string_length = word_length(str, k + 1);
+		string_length = word_length(str, k + 1, delim);
 		for (j = 0; j < string_length; j++)
 		{
-			tmp = get_word(str, k + 1);
-			if (*(tmp + j) != ' ')
+			tmp = get_word(str, k + 1, delim);
+			if (*(tmp + j) != delim)
 			{
 				string_arr[k][j] = *(tmp + j);
 			}
