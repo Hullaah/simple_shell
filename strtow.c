@@ -35,7 +35,7 @@ int word_length(char *str, int word)
 		words++;
 		if (word == words)
 		{
-			while (str[j] != ' ')
+			while (str[j] != ' ' && str[j] != '\0')
 				j++;
 			return (j);
 		}
@@ -47,7 +47,7 @@ int word_length(char *str, int word)
 			words++;
 			if (word == words)
 			{
-				while (str[i] != ' ')
+				while (str[i] != ' ' && str[i] != '\0')
 				{
 					i++;
 					j++;
@@ -93,8 +93,7 @@ char *get_word(char *str, int word)
 	return (0);
 }
 /**
- * strtow - converts  a string to an array of words terminating the array with
- * a NULL pointer
+ * strtow - converts  a string to array of words
  * @str: string
  * Return: array of words
 */

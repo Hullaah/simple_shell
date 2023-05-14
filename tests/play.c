@@ -19,6 +19,7 @@ int main(void)
 	write(STDOUT_FILENO, "$ ", 2);
 	read = _getline(&lineptr, &num, STDIN_FILENO);
 	/*read = getline(&lineptr, &num, stdin);*/
+        printf("\n%lu\n", num);
 	write(STDOUT_FILENO, lineptr, read);
 	free(lineptr);
 	/*Test strtow implementation*/

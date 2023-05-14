@@ -13,4 +13,6 @@ char **strtow(char *str);
 
 ssize_t _getline(char **lineptr, size_t *n, int fd);
 
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+
 #endif
