@@ -18,36 +18,32 @@ int is_implemented_path(char *command, char **path)
 				return (1);
 			i++;
 		}
-			if ((*traverse)[i] == '\0')
+		if ((*traverse)[i] == '\0')
                                 return (1);
 	}
 	return (0);
 }
 
-char *implement_path(char *on, char *path_value)
+char *implement_path(char *command, char **path)
 {
-	char **tmp_path, **paths, *concat, *tmp_concat;
+	char **traverse, *string;
 	struct stat st;
-        int status;
 
-	paths = strtow(path_value, ':');
-	if (is_implemented_path(on, paths))
+	if (is_implemented_path(command, path))
 	{
-                concat = _strdup(on);
-		free_vec(paths);
-		return (concat);
+		if (!stat(command, &st))
+			return (_strdup(command));
+		perror(command);
+		return (NULL);
 	}
-	for (tmp_path = paths; *tmp_path; tmp_path++)
+	for (traverse = path; *traverse; traverse++)
 	{
-		tmp_concat = string_nconcat(*tmp_path, "/",1024);
-		concat = string_nconcat(tmp_concat, on, 1024);
-                status = stat(concat, &st);
-		if (!status)
-			break;
-		free(tmp_concat);
-		free(concat);
+		string = concat(*traverse, "/", command);
+		if (!stat(string, &st))
+			return (string);
+		free(string);
 	}
-	free_vec(paths);
-	return (!status ? concat : _strdup(on));
+	perror(command);
+	return (NULL);
 }
 

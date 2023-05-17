@@ -21,7 +21,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
 char *_getenv(const char *name);
 
-char *string_nconcat(char *s1, char *s2, unsigned int n);
+char *concat(char *s1, char *s2, char *s3);
 
 int _strlen(char *s);
 
@@ -29,8 +29,10 @@ void free_vec(char **vector);
 
 void handle_error(char *error);
 
-char *implement_path(char *on, char *path_value);
+char *implement_path(char *on, char **path);
 
 char *_strdup(char *str);
+
+int _strcmp(char *s1, char *s2);
 
 #endif
