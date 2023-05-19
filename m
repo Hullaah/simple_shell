@@ -1,0 +1,2 @@
+ls -la
+cd docs
