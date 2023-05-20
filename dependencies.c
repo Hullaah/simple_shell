@@ -2,13 +2,19 @@
 
 /**
  * handle_error - handles the error
+ * @error: value tobl pass to perror
+ * Return: void (does not have a return value
 */
 void handle_error(char *error)
 {
 	perror(error);
 	_exit(1);
 }
-
+/**
+ * free_vec: frees a dynamically allocated array of strings
+ * @vector: vector to be freed
+ * Return: void (does not have a return value)
+*/
 void free_vec(char **vector)
 {
 	char **arr;
@@ -40,4 +46,26 @@ char *_strdup(char *str)
 		string[i] = str[i];
 	string[i] = '\0';
 	return (string);
+}
+/**
+ * free_list - frees an allocated ptr to a singly linked list
+ * @head: linked list
+ * Return: void (does not have a return value)
+*/
+void free_list(env_list_t *head)
+{
+	env_list_t *node;
+	char *string;
+
+	if (head)
+	{
+		while (head)
+		{
+			node = head->next;
+			string = head->str;
+			free(string);
+			free(head);
+			head = node;
+		}
+	}
 }

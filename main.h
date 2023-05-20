@@ -9,6 +9,14 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+typedef struct env_list_t
+{
+	char *var;
+	int length;
+	struct env_list_t *next;
+}
+env_list_t;
+
 extern char **environ;
 
 char **strtow(char *str, char delim);
@@ -35,4 +43,7 @@ char *_strdup(char *str);
 
 int _strcmp(char *s1, char *s2);
 
-#endif
+env_list_t *add_env_list(env_list_t **, const char *);
+
+#ndifo
+
