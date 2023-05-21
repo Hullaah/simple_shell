@@ -32,6 +32,8 @@ int main(void)
 			built_in  = get_ops_built_in(vector[0]);
 			if (built_in)
 			{
+                                if (!_strcmp(vector[0], "exit"))
+                                        free_vec(path);
 				built_in(vector, &envlist);
 				free_vec(vector);
 				continue;
@@ -68,12 +70,22 @@ int main(void)
 	}
 	else
 	{
+                lineptr = NULL;
 		num = _getline(&lineptr, &n, STDIN_FILENO);
 		commands = strtow(lineptr, '\n');
 		free(lineptr);
 		for (i = 0; commands[i]; i++)
 		{
 			vector = strtow(commands[i], ' ');
+                        built_in  = get_ops_built_in(vector[0]);
+			if (built_in)
+			{
+                                if (!_strcmp(vector[0], "exit"))
+                                        free_vec(path);
+				built_in(vector, &envlist);
+				free_vec(vector);
+				continue;
+			}
 			command = implement_path(vector[0], path);
 			if (!command)
 			{
@@ -102,6 +114,8 @@ int main(void)
 			}
 		}
 		free_vec(commands);
-	}
+		free_vec(path);
+		free_list(envlist);
+        }
 	exit(0);
 }
