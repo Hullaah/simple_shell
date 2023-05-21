@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-typedef int (*fexec_built_in_t)(char **vector, envlist_t envlist);
+typedef int (*fexec_built_in_t)(char **vector, envlist_t **envlist);
 
 /**
  * struct envlist_t - a linked list of environment variables for the shell
@@ -24,7 +24,11 @@ typedef struct envlist_t
 	struct envlist_t *next;
 }
 envlist_t;
-
+/**
+ * struct built_ins_struct_t - a structure for the built-in commands
+ * @command: command
+ * @f: function to execute command
+*/
 typedef struct built_ins_struct_t
 {
 	char *command;
@@ -75,5 +79,7 @@ int _setenv(char *name, char *value, envlist_t **envlist);
 int _unsetenv(char *name, envlist_t **envlist);
 
 void printenv(envlist_t *envlist);
+
+char *slice_env(char *name);
 
 #endif

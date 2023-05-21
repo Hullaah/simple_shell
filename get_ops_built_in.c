@@ -1,6 +1,6 @@
 #include "main.h"
 
-fexec_built_ins_t get_ops_built_in(char *s)
+fexec_built_in_t get_ops_built_in(char *s)
 {
 	int i;
 	built_ins_struct_t built_ins[] = {

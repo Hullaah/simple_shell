@@ -5,7 +5,9 @@
  * Return: integer
  */
 int _is_digit(char c)
+{
 	return ((c >= '0' && c <= '9') ? 1 : 0);
+}
 /**
  * str_to_integer - converts a string to an integer
  * @s: string to be converted
@@ -16,10 +18,10 @@ int *str_to_integer(char *s)
 	int power = 1, ans = 0, i;
 
 	if ((s[0] < '0' || s[0] > '9') && s[0] != '-')
-		return (NULL)
+		return (NULL);
 	for (i = 1; s[i] != '\0'; i++)
 	{
-		if(!_is_digit(s[i]))
+		if (!_is_digit(s[i]))
 			return (NULL);
 	}
 	i -= (s[0] == '-') ? 2 : 1;

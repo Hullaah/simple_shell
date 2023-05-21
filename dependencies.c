@@ -1,14 +1,39 @@
 #include "main.h"
-
 /**
- * handle_error - handles the error
- * @error: value tobl pass to perror
- * Return: void (does not have a return value
+ * strcmpr_until_sign - compares two string up to a sign
+ * @a: first string
+ * @b: second string
+ * @sign: sign to compare up to
+ * Return: 0 if the same up to sign. diffence between the two characters if not
 */
-void handle_error(char *error)
+int strcmpr_until_sign(char *a, char *b, char sign)
 {
-	perror(error);
-	_exit(1);
+	int i = 0;
+
+	while (b[i] != sign)
+	{
+		if (a[i] == b[i])
+			i++;
+		else
+			return (a[i] - b[i]);
+	}
+        if (a[i] == '=' && b[i] == '\0')
+	        return (0);
+        return (a[i] - b[i]);
+}
+/**
+ * slice_env - slices the value of an environment variable value from the
+ * environment variable
+ * @name: Environment variable name
+ * Return: environment variable value or NULL if not gotten
+*/
+char *slice_env(char *name)
+{
+	int i = 0;
+
+	while (name[i] != '=' && name[i] != '\0')
+		i++;
+	return (((name + i + 1)[0] != '\0') ? name + i + 1 : NULL);
 }
 /**
  * free_vec - frees a dynamically allocated array of strings
