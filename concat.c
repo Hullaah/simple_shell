@@ -21,7 +21,7 @@ int _strlen(char *s)
  * @s3: third string
  * Return: new pointer to concatenated string
 */
-char *concat(char *s1, char *s2,char *s3)
+char *concat(char *s1, char *s2, char *s3)
 {
 	size_t s1_length, s2_length, s3_length, total_length, i;
 	char *s;

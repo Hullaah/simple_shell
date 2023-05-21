@@ -11,17 +11,18 @@ void handle_error(char *error)
 	_exit(1);
 }
 /**
- * free_vec: frees a dynamically allocated array of strings
+ * free_vec - frees a dynamically allocated array of strings
  * @vector: vector to be freed
  * Return: void (does not have a return value)
 */
 void free_vec(char **vector)
 {
 	char **arr;
+
 	for (arr = vector; *arr; arr++)
-    	{
+	{
 		free(*arr);
-    	}
+	}
 	free(vector);
 }
 
@@ -52,9 +53,9 @@ char *_strdup(char *str)
  * @head: linked list
  * Return: void (does not have a return value)
 */
-void free_list(env_list_t *head)
+void free_list(envlist_t *head)
 {
-	env_list_t *node;
+	envlist_t *node;
 	char *string;
 
 	if (head)
@@ -62,7 +63,7 @@ void free_list(env_list_t *head)
 		while (head)
 		{
 			node = head->next;
-			string = head->str;
+			string = head->var;
 			free(string);
 			free(head);
 			head = node;
