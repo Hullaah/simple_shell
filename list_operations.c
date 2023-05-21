@@ -89,7 +89,7 @@ envlist_t *add_envlist(envlist_t **head, char *str)
 int delete_envlist_at_index(envlist_t **head, int index)
 {
 	envlist_t *ptr = *head, *preptr, *node;
-	unsigned int i = 0;
+	int i = 0;
 
 	if (!(*head))
 		return (-1);
@@ -126,7 +126,7 @@ envlist_t *create_envlist(envlist_t **envlist)
 
 	for (traverse = environ; *traverse; traverse++)
 	{
-		add_env_list(envlist, *traverse);
+		add_envlist(envlist, *traverse);
 	}
-	return (envlist);
+	return (*envlist);
 }

@@ -12,12 +12,11 @@ int strcmpr_until_sign(char *a, char *b, char sign)
 
 	while (b[i] != sign)
 	{
-		if (a[i] == b[i])
-			i++;
-		else
+		if (a[i] != b[i])
 			return (a[i] - b[i]);
+		i++;
 	}
-        if (a[i] == '=' && b[i] == '\0')
+        if (b[i] == '=' && a[i] == '\0')
 	        return (0);
         return (a[i] - b[i]);
 }

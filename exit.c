@@ -13,22 +13,21 @@ int _is_digit(char c)
  * @s: string to be converted
  * Return: integer
 */
-int *str_to_integer(char *s)
+int *str_to_integer(char *s,int *ans)
 {
-	int power = 1, ans = 0, i;
+	int power = 1, i;
 
-	if ((s[0] < '0' || s[0] > '9') && s[0] != '-')
-		return (NULL);
-	for (i = 1; s[i] != '\0'; i++)
+	*ans = 0;
+	for (i = 0; s[i] != '\0'; i++)
 	{
 		if (!_is_digit(s[i]))
 			return (NULL);
 	}
-	i -= (s[0] == '-') ? 2 : 1;
 	for (; i > 0; i--)
 		power *= 10;
-	i = (s[0] == '-') ? 1 : 0;
-	for (; s[i] != '\0'; i++)
-		ans += (power < 0) ? (s[i] - '0') * -power : (s[i] - '0') * power;
-	return (&ans);
+	i = 0;
+	power /= 10;
+	for (; s[i] != '\0'; i++, power /= 10)
+		*ans += (s[i] - '0') * power;
+	return (ans);
 }

@@ -8,9 +8,6 @@
 #include <errno.h>
 #include <unistd.h>
 #include <sys/wait.h>
-
-typedef int (*fexec_built_in_t)(char **vector, envlist_t **envlist);
-
 /**
  * struct envlist_t - a linked list of environment variables for the shell
  * @var: environment variable
@@ -24,6 +21,9 @@ typedef struct envlist_t
 	struct envlist_t *next;
 }
 envlist_t;
+
+typedef int (*fexec_built_in_t)(char **vector, envlist_t **envlist);
+
 /**
  * struct built_ins_struct_t - a structure for the built-in commands
  * @command: command
@@ -64,8 +64,6 @@ int _strcmp(char *s1, char *s2);
 
 int strcmpr_until_sign(char *a, char *b, char sign);
 
-int *str_to_integer(char *s);
-
 int delete_envlist_at_index(envlist_t **head, int index);
 
 envlist_t *insert_envlist_at_index(envlist_t **head, int idx, char *s);
@@ -81,5 +79,23 @@ int _unsetenv(char *name, envlist_t **envlist);
 void printenv(envlist_t *envlist);
 
 char *slice_env(char *name);
+
+int execute_setenv(char **vector, envlist_t **envlist);
+
+int execute_unsetenv(char **vector, envlist_t **envlist);
+
+int execute_exit(char **vector, envlist_t **envlist);
+
+int execute_env(char **vector, envlist_t **envlist);
+
+int *str_to_integer(char *s, int *ans);
+
+void free_list(envlist_t *head);
+
+fexec_built_in_t get_ops_built_in(char *s);
+
+int cd(char *s, envlist_t **envlist);
+
+int execute_cd(char **vector, envlist_t **envlist);
 
 #endif

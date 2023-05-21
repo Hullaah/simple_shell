@@ -29,10 +29,13 @@ int _unsetenv(char *name, envlist_t **envlist)
 */
 void printenv(envlist_t *envlist)
 {
-        envlist_t *traverse;
+	envlist_t *traverse;
 
-        for (traverse = envlist; traverse; traverse = traverse->next)
-                write(STDOUT_FILENO, traverse->var, traverse->length);
+	for (traverse = envlist; traverse; traverse = traverse->next)
+	{
+		write(STDOUT_FILENO, traverse->var, traverse->length);
+		write(STDOUT_FILENO, "\n", 1);
+	}
 }
 /**
  * _setenv - sets an environment variable to a particular value
@@ -53,7 +56,7 @@ int _setenv(char *name, char *value, envlist_t **envlist)
 		cmpr = strcmpr_until_sign(string, ptr->var, '=');
 		if (!cmpr)
 		{
-			delete_envlist_at_index(i, envlist);
+			delete_envlist_at_index(envlist, i);
 			insert_envlist_at_index(envlist, i, string);
 			free(string);
 			return (0);
@@ -71,13 +74,14 @@ int _setenv(char *name, char *value, envlist_t **envlist)
 */
 char *_getenv(char *name, envlist_t *envlist)
 {
-        envlist_t *traverse;
+        envlist_t *traverse = envlist;
 	if (!name)
 		return (NULL);
-	for (traverse = environ; traverse; traverse = traverse->next)
+	while (traverse)
 	{
 		if (!strcmpr_until_sign(name, traverse->var, '='))
 			return (slice_env(traverse->var));
+		traverse = traverse->next;
 	}
 	return (NULL);
 }
