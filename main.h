@@ -9,6 +9,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
+typedef int (*fexec_built_in_t)(char **vector, envlist_t envlist);
+
 typedef struct env_list_t
 {
 	char *var;
@@ -16,6 +18,13 @@ typedef struct env_list_t
 	struct env_list_t *next;
 }
 env_list_t;
+
+typedef struct built_ins_struct_t
+{
+	char *command;
+	fexec_built_in_t f;
+}
+built_ins_struct_t;
 
 extern char **environ;
 
@@ -44,6 +53,8 @@ char *_strdup(char *str);
 int _strcmp(char *s1, char *s2);
 
 env_list_t *add_env_list(env_list_t **, const char *);
+
+int *str_to_integer(char *s);
 
 #endif /* MAIN.H*/
 
