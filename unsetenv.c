@@ -1,35 +1,24 @@
 #include "main.h"
 /**
- * delete_nodeint_at_index - deletes a node from a list at index specified
- * by index
- * @head: pointer to address of list
- * @index: index of node to be deleted
- * Return: 1 if deletion is succesful and -1 if not
+ * _unsetenv - removes an environment variable from the envlist
+ * @name: variable name
+ * @envlist: environment list
+ * Return: integer
 */
-int delete_nodeint_at_index(env_list_t **head, int index)
+int _unsetenv(char *name, envlist_t **envlist)
 {
-	env_list_t *ptr = *head, *preptr, *node;
-	unsigned int i = 0;
+	envlist_t *ptr;
+	int cmpr, i = 0;
 
-	if (!(*head))
-		return (-1);
-	if (!index)
+	for (ptr = *envlist; ptr; ptr = ptr->next)
 	{
-		node = ptr->next;
-		free(ptr);
-		*head = node;
-		return (1);
-	}
-	while (i != index && ptr)
-	{
+		cmpr = strcmpr_until_sign(name, ptr->var, '=');
+		if (!cmpr)
+		{
+			delete_envlist_at_index(envlist, i);
+			return (0);
+		}
 		i++;
-		preptr = ptr;
-		ptr = ptr->next;
 	}
-	if (i != index)
-		return (-1);
-	node = ptr->next;
-	free(ptr);
-	preptr->next = node;
-	return (1);
+	return (-1);
 }

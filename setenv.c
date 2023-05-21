@@ -1,54 +1,31 @@
 #include "main.h"
-
 /**
- * _strlen - calculates the length of a string
- * @s: s
- * Return: the length of a string
+ * _setenv - sets an environment variable to a particular value
+ * @name: variable name
+ * @value: variable value to be given to name
+ * @envlist: environment variables list to work with
+ * Return: integer
 */
-
-int _strlen_list(const char *s)
+int _setenv(char *name, char *value, envlist_t **envlist)
 {
-	int i = 0;
-
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
-/**
- * add_node_end - adds a node to the end of a singly linked list
- * @head: pointer to node start
- * @str: node string
- * Return: pointer to new node
-*/
-env_list_t *add_env_list(env_list_t **head, const char *str)
-{
-	env_list_t *node;
-	env_list_t *ptr = *head;
 	char *string;
-	int string_length;
+	envlist_t *ptr;
+	int cmpr, i = 0;
 
-	string_length = _strlen_list(str);
-	node = malloc(sizeof(env_list_t));
-	if (node == NULL)
-		return (NULL);
-	string = strdup(str);
-	if (string == NULL)
+	string = concat(name, "=", value);
+	for (ptr = *envlist; ptr; ptr = ptr->next)
 	{
-		free(node);
-		return (NULL);
+		cmpr = strcmpr_until_sign(string, ptr->var, '=');
+		if (!cmpr)
+		{
+			delete_envlist_at_index(i, envlist);
+			insert_envlist_at_index(envlist, i, string);
+			free(string);
+			return (0);
+		}
+		i++;
 	}
-	node->var = string;
-	node->length = string_length;
-	node->next = NULL;
-
-	while (ptr && ptr->next)
-		ptr = ptr->next;
-	if (!ptr)
-	{
-		*head = node;
-		return (*head);
-	}
-	ptr->next = node;
-	return (*head);
+	add_envlist(envlist, string);
+	free(string);
+	return (0);
 }

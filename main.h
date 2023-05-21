@@ -8,14 +8,19 @@
 #include <errno.h>
 #include <unistd.h>
 #include <sys/wait.h>
-
-typedef struct env_list_t
+/**
+ * struct envlist_t - a linked list of environment variables for the shell
+ * @var: environment variable
+ * @length: string length
+ * @next: pointer to next node
+*/
+typedef struct envlist_t
 {
 	char *var;
 	int length;
-	struct env_list_t *next;
+	struct envlist_t *next;
 }
-env_list_t;
+envlist_t;
 
 extern char **environ;
 
@@ -27,7 +32,7 @@ void *_memcpy(void *dest, const void *src, size_t n);
 
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 
-char *_getenv(const char *name);
+char *_getenv(char *name, envlist_t *envlist);
 
 char *concat(char *s1, char *s2, char *s3);
 
@@ -43,7 +48,20 @@ char *_strdup(char *str);
 
 int _strcmp(char *s1, char *s2);
 
-env_list_t *add_env_list(env_list_t **, const char *);
+int strcmpr_until_sign(char *a, char *b, char sign);
 
-#ndifo
+int delete_envlist_at_index(envlist_t **head, int index);
 
+envlist_t *insert_envlist_at_index(envlist_t **head, int idx, char *s);
+
+envlist_t *add_envlist(envlist_t **head, char *str);
+
+envlist_t *create_envlist(envlist_t **envlist);
+
+int _setenv(char *name, char *value, envlist_t **envlist);
+
+int _unsetenv(char *name, envlist_t **envlist);
+
+void printenv(envlist_t *envlist);
+
+#endif

@@ -3,6 +3,7 @@
 /**
  * word_count - count the number of words in a string
  * @str: string
+ * @delim: delimeter
  * Return: number of words in a string
 */
 int word_count(char *str, char delim)
@@ -23,6 +24,7 @@ int word_count(char *str, char delim)
  *  word_length - calculates the length of each word in a string
  * @str: string
  * @word: The word in the string whose length is to be calculated.
+ * @delim: delimeter
  * e.g: first word, second word, third word and so on
  * Return: length of word in a string
 */
@@ -64,6 +66,7 @@ int word_length(char *str, int word, char delim)
  * @str: string
  * @word: word to be gotten. e.g whether first word, second word or third word
  * and so on is to be gotten
+ * @delim: delimeter
  * Return: gotten word
 */
 char *get_word(char *str, int word, char delim)
@@ -95,6 +98,7 @@ char *get_word(char *str, int word, char delim)
 /**
  * strtow - converts  a string to array of words
  * @str: string
+ * @delim: delimeter
  * Return: array of words
 */
 char **strtow(char *str, char delim)

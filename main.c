@@ -3,12 +3,14 @@
 int main(void)
 {
 	char **vector, **path, **commands, *command, *lineptr;
+        envlist_t *envlist = NULL;
 	size_t n = 0;
 	ssize_t num;
 	int status, i = 0;
 	pid_t pid;
 
-	path = strtow(_getenv("PATH"), ':');
+        create_envlist(&envlist);
+	path = strtow(_getenv("PATH", envlist), ':');
 	if (isatty(STDIN_FILENO))
 	{
 		for (;;)
@@ -49,7 +51,7 @@ int main(void)
 			}
 		}
 		if (!num)
-			write(1,"\n", 1);
+			write(1, "\n", 1);
 	}
 	else
 	{
