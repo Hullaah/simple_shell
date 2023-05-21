@@ -45,5 +45,5 @@ int _strcmp(char *s1, char *s2);
 
 env_list_t *add_env_list(env_list_t **, const char *);
 
-#ndifo
+#endif /* MAIN.H*/
 
