@@ -1,5 +1,10 @@
 #include "main.h"
-
+/**
+ * get_ops_built_in - checks if a command is a built in and gets the function
+ * to be executed for the command
+ * @s: command
+ * Return: function to be executed for command or null
+*/
 fexec_built_in_t get_ops_built_in(char *s)
 {
 	int i;

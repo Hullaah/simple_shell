@@ -11,9 +11,10 @@ int _is_digit(char c)
 /**
  * str_to_integer - converts a string to an integer
  * @s: string to be converted
- * Return: integer
+ * @ans: address where converted integer is to be stored
+ * Return: pointer to integer
 */
-int *str_to_integer(char *s,int *ans)
+int *str_to_integer(char *s, int *ans)
 {
 	int power = 1, i;
 

@@ -16,9 +16,9 @@ int strcmpr_until_sign(char *a, char *b, char sign)
 			return (a[i] - b[i]);
 		i++;
 	}
-        if (b[i] == '=' && a[i] == '\0')
-	        return (0);
-        return (a[i] - b[i]);
+	if (b[i] == '=' && a[i] == '\0')
+		return (0);
+	return (a[i] - b[i]);
 }
 /**
  * slice_env - slices the value of an environment variable value from the

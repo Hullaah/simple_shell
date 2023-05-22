@@ -15,7 +15,7 @@ envlist_t *insert_envlist_at_index(envlist_t **head, int idx, char *s)
 	if (!node)
 		return (NULL);
 	node->var = _strdup(s);
-        node->length = _strlen(s);
+	node->length = _strlen(s);
 	node->next = NULL;
 
 	if (!ptr && !idx)
@@ -96,7 +96,7 @@ int delete_envlist_at_index(envlist_t **head, int index)
 	if (!index)
 	{
 		node = ptr->next;
-                free(ptr->var);
+		free(ptr->var);
 		free(ptr);
 		*head = node;
 		return (1);
@@ -110,7 +110,7 @@ int delete_envlist_at_index(envlist_t **head, int index)
 	if (i != index)
 		return (-1);
 	node = ptr->next;
-        free(ptr->var);
+	free(ptr->var);
 	free(ptr);
 	preptr->next = node;
 	return (1);

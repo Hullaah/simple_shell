@@ -70,11 +70,13 @@ int _setenv(char *name, char *value, envlist_t **envlist)
 /**
  * _getenv - gets an environment variable
  * @name: environment variable name to be gotten
+ * @envlist: environment list
  * Return: Value of environment variable or NULL if not found
 */
 char *_getenv(char *name, envlist_t *envlist)
 {
-        envlist_t *traverse = envlist;
+	envlist_t *traverse = envlist;
+
 	if (!name)
 		return (NULL);
 	while (traverse)

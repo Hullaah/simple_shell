@@ -1,5 +1,10 @@
 #include "main.h"
-
+/**
+ * execute_setenv - function that executes the setenv command
+ * @vector: array of command and its argument
+ * @envlist: pointer to the environment variables linked list
+ * Return: integer
+*/
 int execute_setenv(char **vector, envlist_t **envlist)
 {
 	int i, j, set;
@@ -8,7 +13,7 @@ int execute_setenv(char **vector, envlist_t **envlist)
 	j = _strlen(s);
 	for (i = 0; vector[i]; i++)
 		;
-	if(i != 3)
+	if (i != 3)
 	{
 		write(STDERR_FILENO, s, j);
 		return (0);
@@ -23,6 +28,12 @@ int execute_setenv(char **vector, envlist_t **envlist)
 	}
 	return (1);
 }
+/**
+ * execute_env - function that executes the env command
+ * @vector: array of command and its argument
+ * @envlist: pointer to the environment variables linked list
+ * Return: integer
+*/
 int execute_env(char **vector, envlist_t **envlist)
 {
 	int i, j;
@@ -39,6 +50,12 @@ int execute_env(char **vector, envlist_t **envlist)
 	printenv(*envlist);
 	return (1);
 }
+/**
+ * execute_unsetenv - function that executes the unsetenv command
+ * @vector: array of command and its argument
+ * @envlist: pointer to the environment variables linked list
+ * Return: integer
+*/
 int execute_unsetenv(char **vector, envlist_t **envlist)
 {
 	int i, j, unset;
@@ -47,7 +64,7 @@ int execute_unsetenv(char **vector, envlist_t **envlist)
 	j = _strlen(s);
 	for (i = 0; vector[i]; i++)
 		;
-	if(i != 2)
+	if (i != 2)
 	{
 		write(STDERR_FILENO, s, j);
 		return (0);
@@ -62,6 +79,12 @@ int execute_unsetenv(char **vector, envlist_t **envlist)
 	}
 	return (1);
 }
+/**
+ * execute_exit - function that executes the exit command
+ * @vector: array of command and its argument
+ * @envlist: pointer to the environment variables linked list
+ * Return: integer
+*/
 int execute_exit(char **vector, envlist_t **envlist)
 {
 	int i, j, k = 0, *exit_status = &k;
@@ -70,7 +93,7 @@ int execute_exit(char **vector, envlist_t **envlist)
 	j = _strlen(s);
 	for (i = 0; vector[i]; i++)
 		;
-	if(i != 1 && i != 2)
+	if (i != 1 && i != 2)
 	{
 		write(STDERR_FILENO, s, j);
 		return (0);
@@ -87,13 +110,19 @@ int execute_exit(char **vector, envlist_t **envlist)
 	free_list(*envlist);
 	exit(*exit_status);
 }
+/**
+ * execute_cd - function that executes the cd command
+ * @vector: array of command and its argument
+ * @envlist: pointer to the environment variables linked list
+ * Return: integer
+*/
 int execute_cd(char **vector, envlist_t **envlist)
 {
 	int i, j, k;
 	char *s = "Invalid number of arguments\n";
 
 	j = _strlen(s);
-	for(i = 0; vector[i]; i++)
+	for (i = 0; vector[i]; i++)
 		;
 	if (i != 1 && i != 2)
 	{

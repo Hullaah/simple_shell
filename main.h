@@ -8,6 +8,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <signal.h>
 /**
  * struct envlist_t - a linked list of environment variables for the shell
  * @var: environment variable

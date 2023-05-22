@@ -1,17 +1,23 @@
 #include "main.h"
 
+void signalHandler(int sig)
+{
+	(void) sig;
+	write(STDOUT_FILENO, "\n$ ", 3);
+}
 int main(void)
 {
 	char **vector, **path, **commands, *command, *lineptr, *paths;
-        envlist_t *envlist = NULL;
+	envlist_t *envlist = NULL;
 	size_t n = 0;
 	ssize_t num;
 	int status, i = 0;
 	pid_t pid;
 	fexec_built_in_t built_in;
 
-        create_envlist(&envlist);
-        paths = _getenv("PATH", envlist);
+	signal(SIGINT, signalHandler);
+	create_envlist(&envlist);
+	paths = _getenv("PATH", envlist);
 	path = strtow(paths, ':');
 	if (isatty(STDIN_FILENO))
 	{
@@ -20,6 +26,11 @@ int main(void)
 			write(1, "$ ", 2);
 			lineptr = NULL;
 			num = _getline(&lineptr, &n, STDIN_FILENO);
+			if (num == 1)
+			{
+				free(lineptr);
+				continue;
+			}
 			if (!num)
 			{
 				free(lineptr);
@@ -32,8 +43,8 @@ int main(void)
 			built_in  = get_ops_built_in(vector[0]);
 			if (built_in)
 			{
-                                if (!_strcmp(vector[0], "exit"))
-                                        free_vec(path);
+				if (!_strcmp(vector[0], "exit"))
+					free_vec(path);
 				built_in(vector, &envlist);
 				free_vec(vector);
 				continue;
@@ -70,18 +81,18 @@ int main(void)
 	}
 	else
 	{
-                lineptr = NULL;
+		lineptr = NULL;
 		num = _getline(&lineptr, &n, STDIN_FILENO);
 		commands = strtow(lineptr, '\n');
 		free(lineptr);
 		for (i = 0; commands[i]; i++)
 		{
 			vector = strtow(commands[i], ' ');
-                        built_in  = get_ops_built_in(vector[0]);
+			built_in  = get_ops_built_in(vector[0]);
 			if (built_in)
 			{
-                                if (!_strcmp(vector[0], "exit"))
-                                        free_vec(path);
+				if (!_strcmp(vector[0], "exit"))
+					free_vec(path);
 				built_in(vector, &envlist);
 				free_vec(vector);
 				continue;
@@ -116,6 +127,6 @@ int main(void)
 		free_vec(commands);
 		free_vec(path);
 		free_list(envlist);
-        }
+	}
 	exit(0);
 }
