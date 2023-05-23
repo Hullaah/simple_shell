@@ -32,7 +32,7 @@ env_list_t *add_env_list(env_list_t **head, const char *str)
 	node = malloc(sizeof(env_list_t));
 	if (node == NULL)
 		return (NULL);
-	string = strdup(str);
+	string = _strdup(str);
 	if (string == NULL)
 	{
 		free(node);
