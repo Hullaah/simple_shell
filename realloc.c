@@ -13,10 +13,7 @@ void *_memcpy(void *dest, const void *src, size_t n)
 	const char *src_ptr = src;
 
 	for (i = 0; i < n; i++)
-	{
 		dst_ptr[i] = src_ptr[i];
-	}
-	
 	return (dest);
 }
 /**
