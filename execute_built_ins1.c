@@ -120,8 +120,8 @@ int execute_cd(char **vector, envlist_t **envlist)
 
 	for (i = 0; vector[i]; i++)
 		;
-	k = (i > 2) ? cd(vector[1], envlist) : cd(vector[0], envlist);
+	k = (i > 1) ? cd(vector[1], envlist) : cd(vector[0], envlist);
 	if (k == -1)
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }

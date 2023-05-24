@@ -18,10 +18,7 @@ int cd(char *s, envlist_t **envlist)
 		}
 		i = chdir(old_pwd);
 		if (i == -1)
-		{
-			perror("cd");
 			return (-1);
-		}
 		tmp = _strdup(old_pwd);
 		old_pwd = _getenv("PWD", *envlist);
 		pwd = tmp;
@@ -37,10 +34,7 @@ int cd(char *s, envlist_t **envlist)
 		pwd = _getenv("HOME", *envlist);
 		i = chdir(pwd);
 		if (i == -1)
-		{
-			perror("cd");
 			return (-1);
-		}
 		_setenv("OLDPWD", old_pwd, envlist);
 		_setenv("PWD", pwd, envlist);
 		return (0);
@@ -48,15 +42,9 @@ int cd(char *s, envlist_t **envlist)
 	old_pwd = _getenv("PWD", *envlist);
 	i = chdir(s);
 	if (i == -1)
-	{
-		perror("cd");
 		return (-1);
-	}
 	if (!getcwd(pwd2, 1024))
-	{
-		perror("gcd");
 		return (-1);
-	}
 	_setenv("OLDPWD", old_pwd, envlist);
 	_setenv("PWD", pwd2, envlist);
 	return (0);

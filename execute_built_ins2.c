@@ -8,11 +8,8 @@ int execute_built_in(envlist_t **envlist, char **vector)
 	if (built_in)
 	{
 		ret = built_in(vector, envlist);
-		if (!_strcmp(vector[0], "exit"))
-		{
+		if (!_strcmp(vector[0], "exit") || !_strcmp(vector[0], "cd"))
 			return (ret);
-		}
-		/*free_vec(vector);*/
 		return (0);
 	}
 	return (1);
