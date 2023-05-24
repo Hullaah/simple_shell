@@ -4,11 +4,29 @@ int print_string(char *s)
 	int i;
 
 	for (i = 0; s[i] != '\0'; i++)
-	{
-		write(STDERR_FILENO, &s[i], 1);
-	}
+		;
+	write(STDERR_FILENO, s, i);
 	return (i);
 }
+
+int print_numbers(int k)
+{ 
+	int kcopy, count = 0, power_10;
+	char c;
+
+	kcopy = k;
+	for (power_10 = 1; kcopy / 10; kcopy /= 10, power_10 *= 10)
+		;
+	while (power_10)
+	{
+		c = ((k / power_10) % 10) + '0';
+		write(STDERR_FILENO, &c, 1);
+		count++;
+		power_10 /= 10;
+	}
+	return (count);
+}
+
 
 /**
  * _printf - works just like the standard library printf
@@ -18,7 +36,7 @@ int print_string(char *s)
 int printerr(char *format, ...)
 {
 	int write_count = 0, i;
-        char c;
+	char c;
 	va_list args;
 
 	if (format == NULL)
@@ -38,6 +56,8 @@ int printerr(char *format, ...)
 		i++;
 		if (format[i] == 's')
 			write_count += print_string(va_arg(args, char *));
+		else if (format[i] == 'd')
+			write_count += print_numbers(va_arg(args, int));
 	}
 	va_end(args);
 	return (write_count);

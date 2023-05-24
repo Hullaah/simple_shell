@@ -45,7 +45,6 @@ char *implement_path(char *command, char **path)
 	{
 		if (!stat(command, &st))
 			return (_strdup(command));
-		perror(command);
 		return (NULL);
 	}
 	for (traverse = path; *traverse; traverse++)
@@ -55,7 +54,6 @@ char *implement_path(char *command, char **path)
 			return (string);
 		free(string);
 	}
-	perror(command);
 	return (NULL);
 }
 

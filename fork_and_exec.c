@@ -5,10 +5,7 @@ int implement_command(char **vector, char **path)
 
 	command = implement_path(vector[0], path);
 	if (!command)
-	{
-		free_vec(vector);
 		return (0);
-	}
 	free(vector[0]);
 	vector[0] = command;
 	return (1);
@@ -16,7 +13,6 @@ int implement_command(char **vector, char **path)
 
 int exec_cmd(char **vector)
 {
-
 	execve(vector[0], vector, environ);
 	perror(vector[0]);
 	_exit(-1);	

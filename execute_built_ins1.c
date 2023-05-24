@@ -116,19 +116,11 @@ int execute_exit(char **vector, __attribute__((unused))envlist_t **envlist)
 */
 int execute_cd(char **vector, envlist_t **envlist)
 {
-	int i, j, k;
-	char *s = "Invalid number of arguments\n";
+	int i, k;
 
-	j = _strlen(s);
 	for (i = 0; vector[i]; i++)
 		;
-	if (i != 1 && i != 2)
-	{
-		write(STDERR_FILENO, s, j);
-		return (0);
-	}
-
-	k = (i == 2) ? cd(vector[1], envlist) : cd(vector[0], envlist);
+	k = (i > 2) ? cd(vector[1], envlist) : cd(vector[0], envlist);
 	if (k == -1)
 		return (0);
 	return (1);

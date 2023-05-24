@@ -21,7 +21,8 @@ char **handle_comments(char **vector)
 	}
         return (vector);
 }
-int format_spaces(char **vector, char **path, envlist_t **envlist)
+int format_spaces(char **vector, char **path, envlist_t **envlist,
+char *program, int co)
 {
 	int i, j;
         char **vec;
@@ -41,18 +42,23 @@ int format_spaces(char **vector, char **path, envlist_t **envlist)
                 }
                 if (!j)
                 {
+                        if (!_strcmp(vec[0], "cd"))
+                                printerr("%s: %d: %s: can't cd into %s\n", program, co, vec[0], vec[1]);
                         free_vec(vec);
                         continue;
                 }
                 j = fork_cmd(vec, path);
                 if (!j)
+                {
+                        printerr("%s: %d: %s: not found\n", program, co, vec[0]);
+                        free_vec(vec);
                         continue;
+                }
 	}
-        if (!j)
-                return (0);
         return (1);
 }
-int execute(char *string, int num, char **path, envlist_t **envlist)
+int execute(char *string, int num, char **path, envlist_t **envlist,
+char *program, int co)
 {
 	char **vector;
         int i;
@@ -71,7 +77,7 @@ int execute(char *string, int num, char **path, envlist_t **envlist)
 	}
         vector = strtow(string, ';');
         free(string);
-	i = format_spaces(vector, path, envlist);
+	i = format_spaces(vector, path, envlist, program, co);
         free_vec(vector);
         if (!i)
                 return (0);

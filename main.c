@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 	envlist_t *envlist = NULL;
 	size_t n = 0;
 	ssize_t num;
-        int executed, i, fd;
+        int executed, i, fd, j = 0;
 
 	signal(SIGINT, signalHandler);
 	create_envlist(&envlist);
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 		free(lineptr);
 		for (i = 0; commands[i]; i++)
 		{
-                        executed = execute(commands[i], num, path, &envlist);
+                        executed = execute(commands[i], num, path, &envlist, argv[0], i + 1);
                         if (executed == -1)
                                 break;
                         if (executed == 1 || !executed)
@@ -52,10 +52,11 @@ int main(int argc, char *argv[])
 	{
 		for (;;)
 		{
+                        j++;
 			write(1, "$ ", 2);
 			lineptr = NULL;
 			num = _getline(&lineptr, &n, STDIN_FILENO);
-                        executed = execute(lineptr, num, path, &envlist);
+                        executed = execute(lineptr, num, path, &envlist, argv[0], j);
                         if (executed == -1)
                                 break;
                         if (executed == 1 || !executed)
