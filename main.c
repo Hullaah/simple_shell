@@ -5,128 +5,64 @@ void signalHandler(int sig)
 	(void) sig;
 	write(STDOUT_FILENO, "\n$ ", 3);
 }
-int main(void)
+int main(int argc, char *argv[])
 {
-	char **vector, **path, **commands, *command, *lineptr, *paths;
+	char **path, **commands, *lineptr, *paths;
 	envlist_t *envlist = NULL;
 	size_t n = 0;
 	ssize_t num;
-	int status, i = 0;
-	pid_t pid;
-	fexec_built_in_t built_in;
+        int executed, i, fd;
 
 	signal(SIGINT, signalHandler);
 	create_envlist(&envlist);
 	paths = _getenv("PATH", envlist);
 	path = strtow(paths, ':');
-	if (isatty(STDIN_FILENO))
+	if (argc > 1 || !isatty(STDIN_FILENO))
+	{
+		lineptr = NULL;
+                if (argc > 1)
+                {
+                        fd = open(argv[1], O_RDONLY);
+                        if (fd == -1)
+                        {
+                                perror("cannot open file");
+		                free_vec(path);
+		                free_list(envlist);
+                                exit(-1);
+                        }
+                }
+                else
+                        fd = STDIN_FILENO;
+		num = _getline(&lineptr, &n, fd);
+		commands = strtow(lineptr, '\n');
+		free(lineptr);
+		for (i = 0; commands[i]; i++)
+		{
+                        executed = execute(commands[i], num, path, &envlist);
+                        if (executed == -1)
+                                break;
+                        if (executed == 1 || !executed)
+                                continue;
+		}
+                free(commands);
+		free_vec(path);
+		free_list(envlist);
+	}
+	else
 	{
 		for (;;)
 		{
 			write(1, "$ ", 2);
 			lineptr = NULL;
 			num = _getline(&lineptr, &n, STDIN_FILENO);
-			if (num == 1)
-			{
-				free(lineptr);
-				continue;
-			}
-			if (!num)
-			{
-				free(lineptr);
-				free_vec(path);
-				free_list(envlist);
-				break;
-			}
-			vector = strtow(lineptr, ' ');
-			free(lineptr);
-			built_in  = get_ops_built_in(vector[0]);
-			if (built_in)
-			{
-				if (!_strcmp(vector[0], "exit"))
-					free_vec(path);
-				built_in(vector, &envlist);
-				free_vec(vector);
-				continue;
-			}
-			command = implement_path(vector[0], path);
-			if (!command)
-			{
-				free_vec(vector);
-				continue;
-			}
-			free(vector[0]);
-			vector[0] = command;
-			pid = fork();
-			if (pid == -1)
-			{
-				perror("fork");
-				_exit(-1);
-			}
-			if (pid > 0)
-			{
-				free_vec(vector);
-				waitpid(pid, &status, 0);
-			}
-			else
-			{
-				execve(vector[0], vector, environ);
-				perror(vector[0]);
-				free_vec(vector);
-				_exit(-1);
-			}
+                        executed = execute(lineptr, num, path, &envlist);
+                        if (executed == -1)
+                                break;
+                        if (executed == 1 || !executed)
+                                continue;
 		}
-		if (!num)
+		if (executed == -1)
 			write(1, "\n", 1);
-	}
-	else
-	{
-		lineptr = NULL;
-		num = _getline(&lineptr, &n, STDIN_FILENO);
-		commands = strtow(lineptr, '\n');
-		free(lineptr);
-		for (i = 0; commands[i]; i++)
-		{
-			vector = strtow(commands[i], ' ');
-			built_in  = get_ops_built_in(vector[0]);
-			if (built_in)
-			{
-				if (!_strcmp(vector[0], "exit"))
-					free_vec(path);
-				built_in(vector, &envlist);
-				free_vec(vector);
-				continue;
-			}
-			command = implement_path(vector[0], path);
-			if (!command)
-			{
-				free_vec(vector);
-				continue;
-			}
-			free(vector[0]);
-			vector[0] = command;
-			pid = fork();
-			if (pid == -1)
-			{
-				perror("fork");
-				_exit(-1);
-			}
-			if (pid > 0)
-			{
-				free_vec(vector);
-				waitpid(pid, &status, 0);
-			}
-			else
-			{
-				execve(vector[0], vector, environ);
-				perror(vector[0]);
-				free_vec(vector);
-				_exit(-1);
-			}
-		}
-		free_vec(commands);
-		free_vec(path);
-		free_list(envlist);
 	}
 	exit(0);
 }

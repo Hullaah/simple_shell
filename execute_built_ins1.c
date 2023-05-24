@@ -85,7 +85,7 @@ int execute_unsetenv(char **vector, envlist_t **envlist)
  * @envlist: pointer to the environment variables linked list
  * Return: integer
 */
-int execute_exit(char **vector, envlist_t **envlist)
+int execute_exit(char **vector, __attribute__((unused))envlist_t **envlist)
 {
 	int i, j, k = 0, *exit_status = &k;
 	char *s = "Invalid number of arguments\n";
@@ -106,9 +106,7 @@ int execute_exit(char **vector, envlist_t **envlist)
 		write(STDERR_FILENO, s, j);
 		return (0);
 	}
-	free_vec(vector);
-	free_list(*envlist);
-	exit(*exit_status);
+	return (*exit_status);
 }
 /**
  * execute_cd - function that executes the cd command

@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <stdarg.h>
 /**
  * struct envlist_t - a linked list of environment variables for the shell
  * @var: environment variable
@@ -36,6 +37,13 @@ typedef struct built_ins_struct_t
 	fexec_built_in_t f;
 }
 built_ins_struct_t;
+
+typedef struct listarr_t
+{
+        char **arr;
+        struct listarr_t *next;
+}
+listarr_t;
 
 extern char **environ;
 
@@ -98,5 +106,15 @@ fexec_built_in_t get_ops_built_in(char *s);
 int cd(char *s, envlist_t **envlist);
 
 int execute_cd(char **vector, envlist_t **envlist);
+
+int execute_built_in(envlist_t **envlist, char **vector);
+
+int fork_cmd(char **vector, char **path);
+
+int execute(char *string, int num, char **path, envlist_t **envlist);
+
+int check_for_operator_error(char **vector);
+
+int printerr(char *format, ...);
 
 #endif
