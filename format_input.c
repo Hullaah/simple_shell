@@ -8,6 +8,8 @@ char **handle_comments(char **vector)
 	{
 		if (vector[i][0] == '#')
 		{
+                        if (i == 0)
+                                return (NULL);
                         vec = vector + i;
                         j = i;
 			while (vec[j])
@@ -22,15 +24,21 @@ char **handle_comments(char **vector)
         return (vector);
 }
 int format_spaces(char **vector, char **path, envlist_t **envlist,
-char *program, int co)
+char *program, int co, char **mode)
 {
 	int i, j;
         char **vec;
+        char **comments;
 
 	for (i = 0; vector[i]; i++)
 	{
 	        vec = strtow(vector[i], ' ');
-                handle_comments(vec);
+                comments = handle_comments(vec);
+                if (!comments)
+                {
+                        free_vec(vec);
+                        continue;
+                }
                 j = execute_built_in(envlist, vec);
                 if (!_strcmp(vec[0], "exit"))
                 {
@@ -38,6 +46,8 @@ char *program, int co)
                         free_vec(vector);
                         free_list(*envlist);
                         free_vec(path);
+                        if (mode)
+                                free(mode);
                         exit(j);
                 }
                 if (!j)
@@ -58,7 +68,7 @@ char *program, int co)
         return (1);
 }
 int execute(char *string, int num, char **path, envlist_t **envlist,
-char *program, int co)
+char *program, int co, char **mode)
 {
 	char **vector;
         int i;
@@ -77,7 +87,7 @@ char *program, int co)
 	}
         vector = strtow(string, ';');
         free(string);
-	i = format_spaces(vector, path, envlist, program, co);
+	i = format_spaces(vector, path, envlist, program, co, mode);
         free_vec(vector);
         if (!i)
                 return (0);

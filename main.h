@@ -112,7 +112,7 @@ int execute_built_in(envlist_t **envlist, char **vector);
 int fork_cmd(char **vector, char **path);
 
 int execute(char *string, int num, char **path, envlist_t **envlist,
-char *program_name, int count);
+char *program_name, int count, char **mode);
 
 int check_for_operator_error(char **vector);
 

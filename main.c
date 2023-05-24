@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 		free(lineptr);
 		for (i = 0; commands[i]; i++)
 		{
-                        executed = execute(commands[i], num, path, &envlist, argv[0], i + 1);
+                        executed = execute(commands[i], num, path, &envlist, argv[0], i + 1, commands);
                         if (executed == -1)
                                 break;
                         if (executed == 1 || !executed)
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 			write(1, "$ ", 2);
 			lineptr = NULL;
 			num = _getline(&lineptr, &n, STDIN_FILENO);
-                        executed = execute(lineptr, num, path, &envlist, argv[0], j);
+                        executed = execute(lineptr, num, path, &envlist, argv[0], j, NULL);
                         if (executed == -1)
                                 break;
                         if (executed == 1 || !executed)
