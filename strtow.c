@@ -10,7 +10,7 @@ int word_count(char *str, char delim)
 	int i = 1;
 	int words = 0;
 
-	if (str[0] != ' ')
+	if (str[0] != delim)
 		words++;
 	for (; str[i] != '\0'; i++)
 	{
@@ -31,7 +31,7 @@ int word_length(char *str, int word, char delim)
 {
 	int i = 1, j = 0, words = 0;
 
-	if (str[0] != ' ')
+	if (str[0] != delim)
 	{
 		words++;
 		if (word == words)

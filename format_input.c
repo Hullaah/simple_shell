@@ -33,6 +33,8 @@ char *program, int co, char **mode)
 	for (i = 0; vector[i]; i++)
 	{
 		vec = strtow(vector[i], ' ');
+                if (!vec)
+			continue;
 		comments = handle_comments(vec);
 		if (!comments)
 		{
@@ -91,6 +93,8 @@ char *program, int co, char **mode)
 	}
 	vector = strtow(string, ';');
 	free(string);
+        if (!vector || !vector[0])
+                return (0);
 	i = format_spaces(vector, path, envlist, program, co, mode);
 	free_vec(vector);
 	if (!i)
