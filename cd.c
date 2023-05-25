@@ -1,10 +1,16 @@
 #include "main.h"
 
+/**
+ * cd - a function that handles the cd command
+ * @s: a pointer to an array of char
+ * @envlist: a pointer
+ * Return: 0 when sucessful
+ */
+
 int cd(char *s, envlist_t **envlist)
 {
 	int i, j, k;
 	char *old_pwd, *pwd = NULL, *tmp, pwd2[1024];
-
 
 	j = _strcmp(s, "-");
 	if (!j)
@@ -12,10 +18,10 @@ int cd(char *s, envlist_t **envlist)
 		old_pwd = _getenv("OLDPWD", *envlist);
 		if (!old_pwd)
 		{
-                        getcwd(pwd2, 1024);
-                        write(STDOUT_FILENO, pwd2, _strlen(pwd2));
-                        write(STDOUT_FILENO, "\n", 1);
-                        return (0);
+			getcwd(pwd2, 1024);
+			write(STDOUT_FILENO, pwd2, _strlen(pwd2));
+			write(STDOUT_FILENO, "\n", 1);
+			return (0);
 		}
 		i = chdir(old_pwd);
 		if (i == -1)
@@ -23,8 +29,8 @@ int cd(char *s, envlist_t **envlist)
 		tmp = _strdup(old_pwd);
 		old_pwd = _getenv("PWD", *envlist);
 		pwd = tmp;
-                write(STDOUT_FILENO, pwd, _strlen(pwd));
-                write(STDOUT_FILENO, "\n", 1);
+		write(STDOUT_FILENO, pwd, _strlen(pwd));
+		write(STDOUT_FILENO, "\n", 1);
 		_setenv("OLDPWD", old_pwd, envlist);
 		_setenv("PWD", pwd, envlist);
 		free(tmp);
@@ -35,8 +41,8 @@ int cd(char *s, envlist_t **envlist)
 	{
 		old_pwd = _getenv("PWD", *envlist);
 		pwd = _getenv("HOME", *envlist);
-                if (!pwd)
-                        return (0);
+		if (!pwd)
+			return (0);
 		i = chdir(pwd);
 		if (i == -1)
 			return (-1);

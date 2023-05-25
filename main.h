@@ -118,4 +118,8 @@ int check_for_operator_error(char **vector);
 
 int printerr(char *format, ...);
 
+int cd_prev_dir(envlist_t **envlist);
+
+int cd_home_dir(envlist_t **envlist);
+
 #endif
