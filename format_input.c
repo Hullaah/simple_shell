@@ -59,7 +59,7 @@ char *program, int co, char **mode)
 		}
 		if (!_strcmp(vec[0], "cd"))
                 {
-			printerr("%s: %d: %s: can't cd into %s\n", program, co, vec[0], vec[1]);
+			printerr("%s: %d: %s: can't cd to %s\n", program, co, vec[0], vec[1]);
                         free_vec(vec);
                         continue;
                 }

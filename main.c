@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
                         fd = open(argv[1], O_RDONLY);
                         if (fd == -1)
                         {
-                                perror("cannot open file");
+                                printerr("%s: %d: Can't open %s\n",argv[0], 0, argv[1]);
 		                free_vec(path);
 		                free_list(envlist);
                                 exit(-1);
@@ -34,6 +34,13 @@ int main(int argc, char *argv[])
                 else
                         fd = STDIN_FILENO;
 		num = _getline(&lineptr, &n, fd);
+                if (num == 0)
+                {
+                        free(lineptr);
+                        free_vec(path);
+		        free_list(envlist);
+                        exit(0);
+                }
 		commands = strtow(lineptr, '\n');
 		free(lineptr);
 		for (i = 0; commands[i]; i++)

@@ -1,3 +1,1 @@
-#/bin/ls
-ls -l
-#exit
+/bin/echo #ls
