@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
                                 printerr("%s: %d: Can't open %s\n",argv[0], 0, argv[1]);
 		                free_vec(path);
 		                free_list(envlist);
-                                exit(-1);
+                                exit(127);
                         }
                 }
                 else

@@ -2,7 +2,6 @@
 char **handle_comments(char **vector)
 {
 	int i, j;
-	char **vec;
 
 	for (i = 0; vector[i]; i++)
 	{
@@ -10,11 +9,10 @@ char **handle_comments(char **vector)
 		{
 			if (i == 0)
 				return (NULL);
-			vec = vector + i;
 			j = i;
-			while (vec[j])
+			while (vector[j])
 			{
-				free(vec[j]);
+				free(vector[j]);
 				j++;
 			}
 			vector[i] = NULL;
