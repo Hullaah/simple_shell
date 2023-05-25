@@ -46,6 +46,8 @@ char *program, int co, char **mode)
                         {
                                 printerr("%s: %d: %s: Illegal number: %s\n", program, co, vec[0], vec[1]);
                                 free_vec(vec);
+                                if (!vector[i + 1])
+                                        return (2);
                                 continue;
                         }
 			free_vec(vector);
