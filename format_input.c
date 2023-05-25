@@ -1,4 +1,4 @@
-#iNCLUDe "main.h"
+#include "main.h"
 /**
  * handle_comments - removes comments from the vector of strings
  * @vector: an array of strings
