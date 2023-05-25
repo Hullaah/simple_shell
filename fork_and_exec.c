@@ -11,12 +11,12 @@ int implement_command(char **vector, char **path)
 	return (1);
 }
 
-int exec_cmd(char **vector)
+/*int exec_cmd(char **vector)
 {
 	execve(vector[0], vector, environ);
 	perror(vector[0]);
-	_exit(-1);	
-}
+	_exit(2);
+}*/
 
 int fork_cmd(char **vector, char **path)
 {
@@ -36,8 +36,15 @@ int fork_cmd(char **vector, char **path)
 	{
 		free_vec(vector);
 		waitpid(pid, &status, 0);
+                if (WEXITSTATUS(status))
+                        return (2);
 	}
 	else
-		j = exec_cmd(vector);
+        {
+                execve(vector[0], vector, environ);
+	        perror(vector[0]);
+	        _exit(2);
+		/*j = exec_cmd(vector);*/
+        }
 	return (1);
 }

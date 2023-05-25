@@ -100,12 +100,7 @@ int execute_exit(char **vector, __attribute__((unused))envlist_t **envlist)
 	}
 	exit_status = (i == 2) ? str_to_integer(vector[1], exit_status) : &k;
 	if (!exit_status)
-	{
-		s = "exit encountered an error\n";
-		j = _strlen(s);
-		write(STDERR_FILENO, s, j);
-		return (0);
-	}
+                return (-1);
 	return (*exit_status);
 }
 /**

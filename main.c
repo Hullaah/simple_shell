@@ -50,6 +50,19 @@ int main(int argc, char *argv[])
                                 break;
                         if (executed == 1 || !executed)
                                 continue;
+                        if (executed == 2)
+                        {
+                                i++;
+                                while (commands[i])
+                                {
+                                        free(commands[i]);
+                                        i++;
+                                }
+                                free(commands);
+		                free_vec(path);
+		                free_list(envlist);
+                                exit(2);
+                        }
 		}
                 free(commands);
 		free_vec(path);

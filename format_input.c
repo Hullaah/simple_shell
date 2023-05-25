@@ -24,7 +24,7 @@ char **handle_comments(char **vector)
 int format_spaces(char **vector, char **path, envlist_t **envlist,
 char *program, int co, char **mode)
 {
-	int i, j;
+	int i, j, k;
 	char **vec;
 	char **comments;
 
@@ -39,18 +39,29 @@ char *program, int co, char **mode)
 			free_vec(vec);
 			continue;
 		}
-		j = execute_built_in(envlist, vec);
+		k = execute_built_in(envlist, vec);
 		if (!_strcmp(vec[0], "exit"))
 		{
-			free_vec(vec);
+                        if (k == -1)
+                        {
+                                printerr("%s: %d: %s: Illegal number: %s\n", program, co, vec[0], vec[1]);
+                                free_vec(vec);
+                                continue;
+                        }
 			free_vec(vector);
 			free_list(*envlist);
 			free_vec(path);
 			if (mode)
 				free(mode);
-			exit(j);
+                        if (i && !vec[1])
+                        {
+			        free_vec(vec);
+                                exit(j);
+                        }
+			free_vec(vec);
+			exit(k);
 		}
-		if (!j)
+		if (!k)
 		{
 			free_vec(vec);
 			continue;
@@ -66,8 +77,9 @@ char *program, int co, char **mode)
 		{
 			printerr("%s: %d: %s: not found\n", program, co, vec[0]);
 			free_vec(vec);
-			continue;
 		}
+                if (j == 2 && !vector[i + 1])
+                        return (2);
 	}
 	return (1);
 }
@@ -95,7 +107,7 @@ char *program, int co, char **mode)
                 return (0);
 	i = format_spaces(vector, path, envlist, program, co, mode);
 	free_vec(vector);
-	if (!i)
-		return (0);
-	return (2);
+        if (i == 2)
+                return (2);
+	return (3);
 }
