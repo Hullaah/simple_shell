@@ -1,4 +1,10 @@
 #include "main.h"
+/**
+ * implement_command - implement the command by searching for its executable
+ * @vector: an array of strings representing the commands and its args
+ * @path:an array of strings representing the paths to search for the command
+ * Return: 0 on success, indicating the command has been implemented
+ */
 int implement_command(char **vector, char **path)
 {
 	char *command;
@@ -11,13 +17,12 @@ int implement_command(char **vector, char **path)
 	return (1);
 }
 
-/*int exec_cmd(char **vector)
-{
-	execve(vector[0], vector, environ);
-	perror(vector[0]);
-	_exit(2);
-}*/
-
+/**
+ * fork_cmd - executes a command by forking a new process.
+ * @vector: an array of strings representing the command and its args
+ * @path: an array of strings representing the paath to search for the command
+ * Return: 1 on success.
+ */
 int fork_cmd(char **vector, char **path)
 {
 	pid_t pid;
@@ -44,7 +49,6 @@ int fork_cmd(char **vector, char **path)
                 execve(vector[0], vector, environ);
 	        perror(vector[0]);
 	        _exit(2);
-		/*j = exec_cmd(vector);*/
         }
 	return (1);
 }

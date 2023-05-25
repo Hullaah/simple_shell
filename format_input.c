@@ -1,4 +1,12 @@
 #include "main.h"
+/**
+ * handle_comments - removes comments from the vector of strings
+ * @vector: an array of strings
+ * Description: the function iterates through the array of strings and removes
+ * any string starting with a '#' character
+ * Return:modified vector with comments removed, Null if a comment
+ * is found at the beginning.
+ */ 
 char **handle_comments(char **vector)
 {
 	int i, j;
@@ -85,6 +93,17 @@ char *program, int co, char **mode)
 	}
 	return (1);
 }
+/**
+ * execute - executes a string containing commands
+ * @string: string containing commands
+ * @num:number of commands in the strings
+ * @path: array of strings rep the search path
+ * @envlist: pointet to env list
+ * @program: name of program
+ * @co:current command line number
+ * @mode: array of strings rep the execution mode
+ * Return: 2 on success.
+ */ 
 int execute(char *string, int num, char **path, envlist_t **envlist,
 char *program, int co, char **mode)
 {
