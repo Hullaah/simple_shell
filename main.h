@@ -122,8 +122,4 @@ int cd_prev_dir(envlist_t **envlist);
 
 int cd_home_dir(envlist_t **envlist);
 
-int execute_external_cmd(char **vec, char **path, envlist_t **envlist, char *program, int co);
-
-int handle_built_in(char **vec, char **comments, char **vector, char **path, envlist **envlist, char *program, int co, char **mode);
-
 #endif
