@@ -38,5 +38,5 @@ I welcome contributions to this project. Please feel free to open pull requests 
 This project is for educational purposes only and is not intended to be a fully functional shell replacement. It may not support all features of a real shell and may have limitations.
 
 ## Further resources
-The Linux Programming Interface: https://man7.org/tlpi/
-https://www.gnu.org/software/bash/
+- The Linux Programming Interface: https://man7.org/tlpi/
+- Bash documentation: https://www.gnu.org/software/bash/
